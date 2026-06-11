@@ -15,6 +15,46 @@ import { api } from "../../scripts/api.js";
 const SIDEBAR_ID = "exec-monitor";
 const EXTENSION_NAME = "ExecutionMonitorPanel";
 
+function isZhLocale() {
+    try {
+        const locale = localStorage.getItem("Comfy.Settings.Comfy.Locale")
+            || navigator.language || "";
+        return locale.toLowerCase().startsWith("zh");
+    } catch { return false; }
+}
+
+const i18n = {
+    en: {
+        ready: "Ready",
+        running: "Running...",
+        completed: "Completed",
+        byDuration: "By Duration",
+        byOrder: "By Order",
+        waiting: "Waiting for execution...",
+        nodes: "Nodes",
+        total: "Total",
+        sidebarTitle: "Execution Monitor",
+        sidebarTooltip: "Real-time node execution timing",
+    },
+    zh: {
+        ready: "就绪",
+        running: "运行中...",
+        completed: "已完成",
+        byDuration: "按耗时排序",
+        byOrder: "按执行顺序",
+        waiting: "等待工作流执行...",
+        nodes: "节点",
+        total: "总计",
+        sidebarTitle: "执行监控",
+        sidebarTooltip: "实时节点执行耗时面板",
+    },
+};
+
+function t(key) {
+    const lang = isZhLocale() ? "zh" : "en";
+    return i18n[lang][key] || i18n.en[key] || key;
+}
+
 const state = {
     nodeData: new Map(),
     totalTimeMs: 0,
@@ -55,19 +95,19 @@ function buildPanelHTML() {
     return `
         <div class="exec-monitor-root">
             <div class="exec-monitor-status">
-                <span id="exec-monitor-state">Ready</span>
+                <span id="exec-monitor-state">${t("ready")}</span>
                 <span id="exec-monitor-elapsed">--</span>
             </div>
             <div class="exec-monitor-toolbar">
-                <button id="exec-sort-time" class="exec-btn active">By Duration</button>
-                <button id="exec-sort-order" class="exec-btn">By Order</button>
+                <button id="exec-sort-time" class="exec-btn active">${t("byDuration")}</button>
+                <button id="exec-sort-order" class="exec-btn">${t("byOrder")}</button>
             </div>
             <div id="exec-monitor-body" class="exec-monitor-body">
-                <div class="exec-placeholder">Waiting for execution...</div>
+                <div class="exec-placeholder">${t("waiting")}</div>
             </div>
             <div class="exec-monitor-footer">
-                <span id="exec-monitor-count">Nodes: 0</span>
-                <span id="exec-monitor-total">Total: --</span>
+                <span id="exec-monitor-count">${t("nodes")}: 0</span>
+                <span id="exec-monitor-total">${t("total")}: --</span>
             </div>
         </div>
         <style>
@@ -212,7 +252,7 @@ function renderRows() {
     const { nodeData, currentNodeId, isRunning, sortMode } = state;
 
     if (nodeData.size === 0) {
-        body.innerHTML = '<div class="exec-placeholder">Waiting for execution...</div>';
+        body.innerHTML = `<div class="exec-placeholder">${t("waiting")}</div>`;
         return;
     }
 
@@ -269,22 +309,22 @@ function updateStatus() {
 
     if (isRunning) {
         const elapsed = performance.now() - executionStartTime;
-        stateEl.textContent = "Running...";
+        stateEl.textContent = t("running");
         stateEl.style.color = "#4CAF50";
         elapsedEl.textContent = fmt(elapsed);
     } else if (totalTimeMs > 0) {
-        stateEl.textContent = "Completed";
+        stateEl.textContent = t("completed");
         stateEl.style.color = "#e94560";
         elapsedEl.textContent = fmt(totalTimeMs);
     } else {
-        stateEl.textContent = "Ready";
+        stateEl.textContent = t("ready");
         stateEl.style.color = "#aaa";
         elapsedEl.textContent = "--";
     }
 
-    countEl.textContent = `Nodes: ${nodeData.size}`;
+    countEl.textContent = `${t("nodes")}: ${nodeData.size}`;
     const sum = [...nodeData.values()].reduce((a, b) => a + b.time, 0);
-    totalEl.textContent = `Total: ${sum > 0 ? fmt(sum) : "--"}`;
+    totalEl.textContent = `${t("total")}: ${sum > 0 ? fmt(sum) : "--"}`;
 }
 
 function startLiveTimer() {
@@ -440,8 +480,8 @@ app.registerExtension({
             app.extensionManager.registerSidebarTab({
                 id: SIDEBAR_ID,
                 icon: "pi pi-chart-bar",
-                title: "Execution Monitor",
-                tooltip: "Real-time node execution timing",
+                title: t("sidebarTitle"),
+                tooltip: t("sidebarTooltip"),
                 type: "custom",
                 render: (container) => {
                     state.containerEl = container;
