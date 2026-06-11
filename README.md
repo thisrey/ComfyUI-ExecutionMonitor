@@ -2,6 +2,8 @@
 
 A real-time node execution timing panel for ComfyUI. Displays per-node duration, progress bars, and total execution time in a sidebar panel.
 
+![ComfyUI Execution Monitor](assets/screenshot.png)
+
 ## Features
 
 - **Real-time tracking** — See which node is currently running and how long it's taking
