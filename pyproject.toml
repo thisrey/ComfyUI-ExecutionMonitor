@@ -9,6 +9,6 @@ requires-python = ">=3.9"
 Repository = "https://github.com/thisrey/ComfyUI-ExecutionMonitor"
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "soullei"
 DisplayName = "Execution Monitor"
-Icon = "https://raw.githubusercontent.com/thisrey/ComfyUI-ExecutionMonitor/main/assets/icon.png"
+Icon = "https://raw.githubusercontent.com/thisrey/ComfyUI-ExecutionMonitor/main/assets/screenshot.png"
