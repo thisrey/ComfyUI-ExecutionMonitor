@@ -2,8 +2,6 @@
 
 A real-time node execution timing panel for ComfyUI. Displays per-node duration, progress bars, and total execution time in a sidebar panel.
 
-![ComfyUI Execution Monitor](https://github.com/user-attachments/assets/placeholder-screenshot.png)
-
 ## Features
 
 - **Real-time tracking** — See which node is currently running and how long it's taking
@@ -15,6 +13,7 @@ A real-time node execution timing panel for ComfyUI. Displays per-node duration,
   - **Standalone mode** (no dependencies): Uses built-in ComfyUI events for wall-clock measurement
 - **Sidebar integration** — Registers as a native ComfyUI sidebar tab (click the bar chart icon)
 - **Persists last results** — View timing from the previous execution even after navigating away
+- **i18n** — Auto-detects Chinese/English locale
 
 ## Installation
 
@@ -68,6 +67,7 @@ ComfyUI 实时节点执行耗时面板。在侧边栏中显示每个节点的运
   - **独立模式**（无依赖）：使用 ComfyUI 内置事件测量时间
 - **侧边栏集成** — 注册为原生 ComfyUI 侧边栏标签页
 - **保留上次结果** — 切换面板后仍可查看上次执行的计时数据
+- **国际化** — 自动检测中英文环境
 
 ## 安装
 
