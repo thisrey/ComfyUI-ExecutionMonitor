@@ -1,0 +1,14 @@
+[project]
+name = "comfyui-execution-monitor"
+description = "Real-time node execution timing panel for ComfyUI. Displays per-node duration, progress bars, heat-map coloring, and total execution time in the sidebar."
+version = "1.0.0"
+license = "MIT"
+requires-python = ">=3.9"
+
+[project.urls]
+Repository = "https://github.com/thisrey/ComfyUI-ExecutionMonitor"
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "Execution Monitor"
+Icon = "https://raw.githubusercontent.com/thisrey/ComfyUI-ExecutionMonitor/main/assets/icon.png"
